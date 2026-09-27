@@ -1,0 +1,28 @@
+{
+  "name": "live-auction-engine-backend",
+  "version": "1.0.0",
+  "description": "High-concurrency live auction engine with WebSockets, SQLite WAL, and anti-sniping",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "vitest run --coverage"
+  },
+  "dependencies": {
+    "@fastify/cors": "^10.0.2",
+    "@fastify/static": "^10.1.5",
+    "@fastify/websocket": "^11.0.2",
+    "fastify": "^5.2.1",
+    "ws": "^8.18.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "@types/ws": "^8.5.14",
+    "@vitest/coverage-v8": "^3.0.8",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.8"
+  }
+}

@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test-and-build:
+    name: Build, Test & Smoke Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: 'npm'
+          cache-dependency-path: |
+            backend/package-lock.json
+            frontend/package-lock.json
+
+      # 1. Backend tests & build
+      - name: Install Backend Dependencies
+        working-directory: backend
+        run: npm ci
+
+      - name: Test Backend
+        working-directory: backend
+        run: npm run test
+
+      - name: Build Backend
+        working-directory: backend
+        run: npm run build
+
+      # 2. Frontend tests & build
+      - name: Install Frontend Dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Test Frontend
+        working-directory: frontend
+        run: npm run test
+
+      - name: Build Frontend
+        working-directory: frontend
+        run: npm run build
+
+      # 3. Full-Stack Smoke Test
+      - name: Run Smoke Test
+        run: |
+          mkdir -p backend/data
+          node backend/dist/index.js &
+          SERVER_PID=$!
+          sleep 2
+
+          # Verify Healthcheck
+          curl -f http://localhost:4000/healthz
+
+          # Verify Auctions API
+          curl -f http://localhost:4000/api/auctions
+
+          # Verify Placing a Bid
+          curl -f -X POST http://localhost:4000/api/auctions/demo-auction-rolex/bids \
+            -H "Content-Type: application/json" \
+            -d '{"bidder_id":"ci-bot","bidder_name":"CI Bot","amount":510000}'
+
+          # Verify SPA Root serving
+          curl -f http://localhost:4000/ | grep -q "Live Auction Engine"
+
+          kill $SERVER_PID

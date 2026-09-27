@@ -1,0 +1,18 @@
+services:
+  live-auction-engine:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: live-auction-engine
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - PORT=4000
+      - DB_PATH=/app/data/auctions.db
+    volumes:
+      - auction_data:/app/data
+    restart: unless-stopped
+
+volumes:
+  auction_data:
