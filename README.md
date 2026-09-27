@@ -181,7 +181,7 @@ curl -X POST http://localhost:4000/api/auctions/demo-auction-rolex/bids \
 
 | Proyecto | Tecnologías | Descripción |
 | :--- | :--- | :--- |
-| **[live-auction-engine](https://github.com/jimmyrom1/live-auction-engine)** | Node.js 24, WebSockets, SQLite WAL, React 19 | Subastas en tiempo real con resolución atómica de carreras concurrentes y anti-sniping. |
+| **[subscription-billing-dotnet](https://github.com/jimmyrom1/subscription-billing-dotnet)** | .NET 9, C#, EF Core, SQLite | Motor de facturación recurrente con prorrateo exacto al segundo, dunning de 3 intentos e idempotencia HTTP. |
 | **[rate-limiter-grpc](https://github.com/jimmyrom1/rate-limiter-grpc)** | Go, gRPC, Protobuf, Concurrencia | Limitador de tráfico (~90 ns/op) con Token Bucket, Sliding Window y Circuit Breaker. |
 | **[double-entry-ledger](https://github.com/jimmyrom1/double-entry-ledger)** | FastAPI, Asyncpg, PostgreSQL, React | Motor contable de partida doble inmutable con invariante de balance cero diferido en base de datos. |
 | **[subscriptions-api](https://github.com/jimmyrom1/subscriptions-api)** | Java 21, Spring Boot 4, ShedLock, PostgreSQL | API fintech de suscripciones recurrentes con prorrateo exacto y tareas periódicas distribuidas. |
